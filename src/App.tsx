@@ -1,8 +1,8 @@
-import Stepper from "./Components/Stepper/Stepper.tsx";
+import Stepper from "./components/Stepper/Stepper.tsx";
 import styled from "styled-components";
 import { useState } from "react";
-import ProjectData from "./Components/ProjectData/ProjectData.tsx";
-import { IProjectData } from "./Types/project.ts";
+import ProjectData from "./components/ProjectData/ProjectData.tsx";
+import { IProjectData } from "./types/project.ts";
 
 const Wrapper = styled.div`
   display: flex;

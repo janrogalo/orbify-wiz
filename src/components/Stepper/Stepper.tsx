@@ -1,24 +1,13 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { IProjectData } from "../../Types/project.ts";
+import {IProjectData} from "../../types/project.ts";
+import {MOTION_VARIANTS} from "../../types/constants.ts";
 
-import StepOne from "./Components/Steps/StepOne.tsx";
-import StepTwo from "./Components/Steps/StepTwo.tsx";
-import StepThree from "./Components/Steps/StepThree.tsx";
-import StepFour from "./Components/Steps/StepFour.tsx";
+import {validateForm} from "@utils/validateForm.ts";
+import {StepOne, StepTwo, StepThree, StepFour} from "@steps/index.ts";
+import {NavigationButtons, ScreenReaderOnly, WizardWrapper} from "./Stepper.style.ts";
 
-import {
-  NavigationButtons,
-  ScreenReaderOnly,
-  WizardWrapper,
-} from "./Stepper.style.ts";
-
-interface IStepperProps {
-  setProjectCreatedSuccessfully: Dispatch<SetStateAction<boolean>>;
-  formData: IProjectData;
-  setFormData: Dispatch<SetStateAction<IProjectData>>;
-}
 
 interface IStepperProps {
   setProjectCreatedSuccessfully: Dispatch<SetStateAction<boolean>>;
@@ -32,6 +21,7 @@ const Stepper = ({
   setFormData,
 }: IStepperProps) => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const nextStep = () => setCurrentStep((prev) => prev + 1);
   const prevStep = () => setCurrentStep((prev) => prev - 1);
@@ -44,27 +34,32 @@ const Stepper = ({
   };
 
   const handleSubmit = async () => {
-    console.log("Submitting data:", formData);
-    // Simulate fake API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    setProjectCreatedSuccessfully(true);
+    const formErrors = await validateForm(formData);
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+    } else {
+      setProjectCreatedSuccessfully(true);
+    }
   };
 
   const steps = [
-    <StepOne formData={formData} handleChange={handleChange} />,
-    <StepTwo formData={formData} handleChange={handleChange} />,
-    <StepThree formData={formData} handleChange={handleChange} />,
-    <StepFour formData={formData} />,
+    <StepOne key="step-one" formData={formData} handleChange={handleChange} />,
+    <StepTwo key="step-two" formData={formData} handleChange={handleChange} />,
+    <StepThree
+      key="step-three"
+      formData={formData}
+      handleChange={handleChange}
+    />,
+    <StepFour
+      key="step-four"
+      formData={formData}
+      setErrors={setErrors}
+      errors={errors}
+    />,
   ];
 
   const isLastStep = currentStep === steps.length;
-
-  const variants = {
-    enter: { opacity: 0, x: 0 },
-    center: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: 0 },
-  };
 
   return (
     <WizardWrapper>
@@ -74,7 +69,7 @@ const Stepper = ({
       <AnimatePresence mode={"wait"}>
         <motion.div
           key={currentStep}
-          variants={variants}
+          variants={MOTION_VARIANTS}
           initial="enter"
           animate="center"
           exit="exit"

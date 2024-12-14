@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { IProjectData } from "../../Types/project.ts";
+import { IProjectData } from "@types/project.ts";
 
 interface IProjectDataProps {
   setProjectCreatedSuccessfully: Dispatch<SetStateAction<boolean>>;

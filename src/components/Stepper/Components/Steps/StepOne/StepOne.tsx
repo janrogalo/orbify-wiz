@@ -1,5 +1,5 @@
+import {IStepProps} from "../../../../../types/project.ts";
 import { StepWrapper } from "./StepOne.style.ts";
-import { IStepProps } from "../../../../Types/project.ts";
 
 const StepOne = ({ formData, handleChange }: IStepProps) => {
   return (

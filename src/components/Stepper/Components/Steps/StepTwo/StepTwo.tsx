@@ -1,4 +1,4 @@
-import { IStepProps } from "../../../../Types/project.ts";
+import { IStepProps } from "@types/project.ts";
 
 const StepTwo = ({ formData, handleChange }: IStepProps) => {
   return (
