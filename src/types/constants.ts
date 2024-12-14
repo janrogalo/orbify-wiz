@@ -6,5 +6,4 @@ export const MOTION_VARIANTS = {
     exit: { opacity: 0, x: 0 },
 };
 
-
-
+export const PROJECTION_TYPE = "EPSG:3857";

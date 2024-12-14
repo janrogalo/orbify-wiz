@@ -14,6 +14,8 @@ const Wrapper = styled.div`
 function App() {
   const [projectCreatedSuccessfully, setProjectCreatedSuccessfully] =
     useState(false);
+  const [uploadedGeoJson, setUploadedGeoJson] = useState<any | null>(null);
+
   const [formData, setFormData] = useState<IProjectData>({
     name: "",
     description: "",
@@ -41,12 +43,15 @@ function App() {
           setProjectCreatedSuccessfully={setProjectCreatedSuccessfully}
           resetFormData={resetFormData}
           formData={formData}
+          uploadedGeoJson={uploadedGeoJson}
         />
       ) : (
         <Stepper
           setProjectCreatedSuccessfully={setProjectCreatedSuccessfully}
           formData={formData}
           setFormData={setFormData}
+          setUploadedGeoJson={setUploadedGeoJson}
+
         />
       )}
     </Wrapper>

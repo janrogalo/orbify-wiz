@@ -1,28 +1,36 @@
-import { Dispatch, SetStateAction } from "react";
-import { IProjectData } from "@types/project.ts";
+import {Dispatch, SetStateAction} from "react";
+import {IProjectData} from "../../types/project.ts";
+import MapProvider from "../MapProvider/MapProvider.tsx";
+import {Title} from "../Stepper/Components/Steps/StepFour/StepFour.style.ts";
+import {Wrapper} from "./ProjectData.style.ts";
 
 interface IProjectDataProps {
-  setProjectCreatedSuccessfully: Dispatch<SetStateAction<boolean>>;
-  resetFormData: () => void;
-  formData: IProjectData;
+    setProjectCreatedSuccessfully: Dispatch<SetStateAction<boolean>>;
+    resetFormData: () => void;
+    formData: IProjectData;
+    uploadedGeoJson: any;
 }
 
 function ProjectData({
-  setProjectCreatedSuccessfully,
-  resetFormData,
-  formData,
-}: IProjectDataProps) {
-  const handleCreateNewProject = () => {
-    resetFormData();
-    setProjectCreatedSuccessfully(false);
-  };
+                         setProjectCreatedSuccessfully,
+                         resetFormData,
+                         formData,
+                         uploadedGeoJson
+                     }: IProjectDataProps) {
+    const handleCreateNewProject = () => {
+        resetFormData();
+        setProjectCreatedSuccessfully(false);
+    };
 
-  return (
-    <div>
-      <h2>{JSON.stringify(formData)}</h2>
-      <button onClick={handleCreateNewProject}>Create New Project</button>
-    </div>
-  );
+    return (
+        <Wrapper>
+            <Title>{formData.name}</Title>
+            <p>{formData.description}</p>
+
+            <MapProvider geoJsonData={uploadedGeoJson}/>
+            <button onClick={handleCreateNewProject}>Create New Project</button>
+        </Wrapper>
+    );
 }
 
 export default ProjectData;
