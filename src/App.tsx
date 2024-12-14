@@ -1,5 +1,56 @@
+import Stepper from "./Components/Stepper/Stepper.tsx";
+import styled from "styled-components";
+import { useState } from "react";
+import ProjectData from "./Components/ProjectData/ProjectData.tsx";
+import { IProjectData } from "./Types/project.ts";
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 function App() {
-  return <div>Project setup</div>;
+  const [projectCreatedSuccessfully, setProjectCreatedSuccessfully] =
+    useState(false);
+  const [formData, setFormData] = useState<IProjectData>({
+    name: "",
+    description: "",
+    startDate: "",
+    endDate: "",
+    geoJsonFile: null,
+  });
+
+  const resetFormData = () => {
+    setFormData({
+      name: "",
+      description: "",
+      startDate: "",
+      endDate: "",
+      geoJsonFile: null,
+    });
+  };
+
+  return (
+    <Wrapper>
+      <h1>Project Wizard</h1>
+
+      {projectCreatedSuccessfully ? (
+        <ProjectData
+          setProjectCreatedSuccessfully={setProjectCreatedSuccessfully}
+          resetFormData={resetFormData}
+          formData={formData}
+        />
+      ) : (
+        <Stepper
+          setProjectCreatedSuccessfully={setProjectCreatedSuccessfully}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      )}
+    </Wrapper>
+  );
 }
 
 export default App;
