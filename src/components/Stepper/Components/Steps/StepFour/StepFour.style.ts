@@ -21,7 +21,7 @@ export const ErrorSummary = styled.div`
   border: 1px solid #d32f2f;
 `;
 
-export const Field = styled.p`
+export const Field = styled.div`
   margin-bottom: 12px;
   font-size: 16px;
   line-height: 1.5;
